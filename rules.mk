@@ -21,8 +21,7 @@ MUSIC_ENABLE= no
 NKRO_ENABLE = no
 SPACE_CADET_ENABLE = no
 SWAP_HANDS_ENABLE = no
- 
-SRC +=  ./lib/layer_state_reader.c
-SRC +=  ./lib/keylogger.c
-SRC +=  ./lib/timelogger.c
-
+ #sources unlinked for testing
+#SRC +=  ./lib/layer_state_reader.c
+#SRC +=  ./lib/keylogger.c
+#SRC +=  ./lib/timelogger.c

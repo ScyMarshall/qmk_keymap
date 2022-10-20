@@ -1,6 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "keymap_german.h"
-extern uint8_t is_master; // nur ein test nimm wieder raus dann
+//extern uint8_t is_master; // nur ein test nimm wieder raus dann
 
 
 #define BOB 0x00B7    // ·
@@ -187,19 +187,14 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 
 
-
-
-
 //SSD1306 OLED update loop, make sure to enable OLED_ENABLE=yes in rules.mk
 #ifdef OLED_ENABLE
-
+//test
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-    if (is_keyboard_master()) {
-        return OLED_ROTATION_270;
-    } else {
-        return OLED_ROTATION_0;
-    }
+    if (!is_keyboard_master()) return OLED_ROTATION_180; // flips the display 180 degrees if offhand
+    return rotation;
 }
+
 
 void render_lily58_logo(void) {
     static const char PROGMEM lily58_logo[] = {
@@ -240,7 +235,6 @@ void render_lily58_logo(void) {
     oled_write_raw_P(lily58_logo, sizeof(lily58_logo));
 }
 
-
 #    define KEYLOG_LEN 6
 char     keylog_str[KEYLOG_LEN] = {};
 uint8_t  keylogs_str_idx        = 0;
@@ -269,7 +263,6 @@ void add_keylog(uint16_t keycode) {
 
     log_timer = timer_read();
 }
-
 void update_log(void) {
     if (timer_elapsed(log_timer) > 750) {
         add_keylog(0);
@@ -307,7 +300,6 @@ void render_default_layer_state(void) {
     }
 }
 
-
 void render_status_main(void) {
     // Show keyboard layout
     render_default_layer_state();
@@ -335,6 +327,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
             default:
                 add_keylog(keycode);
+    }
+    return false;
     }
     return true;
 }
